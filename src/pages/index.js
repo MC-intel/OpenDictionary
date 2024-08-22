@@ -82,9 +82,8 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    // Adjust the path according to your deployed structure
-    const res = await fetch('/data/water.json'); // Ensure the path is correct for the deployed URL
-    if (!res.ok) throw new Error(`Network response was not ok: ${res.statusText}`);
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwaWNNJ6qbQR_Tva5kvh3qvFpol0CK-o4GxBIcnCeD5qbcsq40e80Becr5rd4R_k_T5/exec');
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     const dictionaryData = await res.json();
 
     // Validate JSON data structure if needed
