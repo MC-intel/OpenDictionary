@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  trailingSlash: true, // Optional: ensure URLs end with a slash
+  basePath: '/OpenDictionary', 
+  assetPrefix: '/OpenDictionary', 
 };
 
 module.exports = nextConfig;
