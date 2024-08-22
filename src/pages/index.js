@@ -82,10 +82,11 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('/data/water.json'); // Fetching from the public directory
+    const res = await fetch('public/data/water.json');
     if (!res.ok) throw new Error('Network response was not ok');
     const dictionaryData = await res.json();
 
+    // Validate JSON data structure if needed
     if (!Array.isArray(dictionaryData)) {
       throw new Error('Invalid JSON structure');
     }
