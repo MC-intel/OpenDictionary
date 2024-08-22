@@ -32,13 +32,10 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
-      - name: Export static files
-        run: npm run export
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: .next/static  # Ensure this matches the output directory for static files
 
   deploy:
     environment:
