@@ -6,7 +6,7 @@ export default function Home({ dictionaryData, error }) {
   const [definition, setDefinition] = useState(null);
 
   const handleSearch = () => {
-    if (!dictionaryData) {
+    if (!dictionaryData || dictionaryData.length === 0) {
       setDefinition('Data not available');
       return;
     }
@@ -83,9 +83,12 @@ export async function getStaticProps() {
   try {
     const res = await fetch('https://raw.githubusercontent.com/MC-intel/dict_json_storage/main/water.json');
     if (!res.ok) throw new Error('Network response was not ok');
-    const dictionaryData = await res.json();
 
-    // Validate JSON data structure if needed
+    // Check if the response content is valid JSON
+    const text = await res.text();
+    const dictionaryData = JSON.parse(text);
+
+    // Validate JSON data structure
     if (!Array.isArray(dictionaryData)) {
       throw new Error('Invalid JSON structure');
     }
