@@ -1,5 +1,5 @@
 
-Here's a revised version of the interface with improved formatting, structure, and styling for better readability and user experience.
+
 
 ## Open Dictionary
 
