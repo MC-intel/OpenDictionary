@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "next build",
-    "export": "next export",
-    "predeploy": "npm run build && npm run export",
+    "predeploy": "npm run build",  // Adjust to use just build
     "deploy": "echo 'Deploying to GitHub Pages...'"
   },
   "dependencies": {
