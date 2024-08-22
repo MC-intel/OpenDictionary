@@ -32,10 +32,13 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
+      - name: Export static files
+        run: npm run export
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .next/  # Adjust based on where the output files are located
+          path: ./out  # This should be the directory where next export outputs files
 
   deploy:
     environment:
@@ -49,4 +52,4 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out  # This should be adjusted based on where your build output is located
+          publish_dir: ./out  # Ensure this matches the directory where your static files are located
