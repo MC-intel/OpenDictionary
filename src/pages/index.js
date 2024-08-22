@@ -82,8 +82,9 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('public/data/water.json');
-    if (!res.ok) throw new Error('Network response was not ok');
+    // Adjust the path according to your deployed structure
+    const res = await fetch('/data/water.json'); // Ensure the path is correct for the deployed URL
+    if (!res.ok) throw new Error(`Network response was not ok: ${res.statusText}`);
     const dictionaryData = await res.json();
 
     // Validate JSON data structure if needed
@@ -107,4 +108,3 @@ export async function getStaticProps() {
     };
   }
 }
-
