@@ -81,12 +81,9 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('https://raw.githubusercontent.com/MC-intel/dict_json_storage/main/water.json');
+    const res = await fetch('http://localhost:3000/data/water.json'); // Use relative path for local testing
     if (!res.ok) throw new Error('Network response was not ok');
-
-    // Check if the response content is valid JSON
-    const text = await res.text();
-    const dictionaryData = JSON.parse(text);
+    const dictionaryData = await res.json();
 
     // Validate JSON data structure
     if (!Array.isArray(dictionaryData)) {
@@ -109,3 +106,4 @@ export async function getStaticProps() {
     };
   }
 }
+
