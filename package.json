@@ -8,10 +8,11 @@
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "gh-pages": "^3.2.3",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "gh-pages": "^3.2.3"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
