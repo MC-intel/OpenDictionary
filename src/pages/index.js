@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import dictionaryData from '../data/dictionary.json';
 
-export default function Home() {
+export default function Home({ dictionaryData, error }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [definition, setDefinition] = useState(null);
 
   const handleSearch = () => {
+    if (!dictionaryData) {
+      setDefinition('Data not available');
+      return;
+    }
     const result = dictionaryData.find(
       entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
     );
@@ -30,7 +33,7 @@ export default function Home() {
           onChange={e => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
-        <p>{definition}</p>
+        <p>{definition || error}</p>
       </main>
 
       <footer>
@@ -74,4 +77,32 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/username/repo/main/data/dictionary.json');
+    if (!res.ok) throw new Error('Network response was not ok');
+    const dictionaryData = await res.json();
+
+    // Validate JSON data structure if needed
+    if (!Array.isArray(dictionaryData)) {
+      throw new Error('Invalid JSON structure');
+    }
+
+    return {
+      props: {
+        dictionaryData,
+        error: null,
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch JSON data:', error.message);
+    return {
+      props: {
+        dictionaryData: [],
+        error: 'Failed to fetch dictionary data',
+      },
+    };
+  }
 }
