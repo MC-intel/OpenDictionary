@@ -1,3 +1,4 @@
+// pages/index.js
 import { useState } from 'react';
 import Head from 'next/head';
 
@@ -6,7 +7,7 @@ export default function Home({ dictionaryData, error }) {
   const [definition, setDefinition] = useState(null);
 
   const handleSearch = () => {
-    if (!dictionaryData || dictionaryData.length === 0) {
+    if (!dictionaryData) {
       setDefinition('Data not available');
       return;
     }
@@ -81,12 +82,11 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    // Fetch local JSON data from the public directory
-    const res = await fetch('/data/water.json'); // Use relative path for Next.js
+    const res = await fetch('/data/water.json'); // Fetching from the public directory
     if (!res.ok) throw new Error('Network response was not ok');
     const dictionaryData = await res.json();
 
-    // Validate JSON data structure
+    // Validate JSON data structure if needed
     if (!Array.isArray(dictionaryData)) {
       throw new Error('Invalid JSON structure');
     }
@@ -107,5 +107,3 @@ export async function getStaticProps() {
     };
   }
 }
-
-
