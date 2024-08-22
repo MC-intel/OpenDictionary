@@ -1,15 +1,14 @@
-
 // next.config.js
 module.exports = {
-  // Ensure the base path is correct for GitHub Pages if needed
-  basePath: '',
-  assetPrefix: '',
+  output: 'export',
+  basePath: '',  // Adjust this if you use a GitHub Pages subpath
+  assetPrefix: '',  // Adjust this if you use a GitHub Pages subpath
 
-  // Configure to export static HTML files
+  // Optionally configure exportPathMap if needed
   async exportPathMap() {
     return {
       '/': { page: '/' },
-      // Add other pages here if needed
+      // Add other pages if necessary
     }
   },
 }
