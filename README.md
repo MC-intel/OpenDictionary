@@ -1,5 +1,5 @@
-
-
+## URL
+https://mc-intel.github.io/OpenDictionary/
 
 ## Open Dictionary
 
