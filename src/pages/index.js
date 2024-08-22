@@ -1,4 +1,3 @@
-// pages/index.js
 import { useState } from 'react';
 import Head from 'next/head';
 
@@ -18,64 +17,38 @@ export default function Home({ dictionaryData, error }) {
   };
 
   return (
-    <div className="container">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
       <Head>
         <title>Open Dictionary</title>
         <meta name="description" content="A simple static dictionary app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Open Dictionary</h1>
-        <input
-          type="text"
-          placeholder="Enter a word"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-        <p>{definition || error}</p>
+      <main className="w-full max-w-md p-4 bg-white shadow-md rounded-lg">
+        <h1 className="text-4xl font-bold mb-4 text-center">Open Dictionary</h1>
+        <div className="flex space-x-2">
+          <input
+            type="text"
+            placeholder="Enter a word"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className="w-full p-2 border rounded-md"
+          />
+          <button 
+            onClick={handleSearch}
+            className="p-2 bg-blue-500 text-white rounded-md"
+          >
+            Search
+          </button>
+        </div>
+        <p className="mt-4 text-lg text-gray-700 text-center">
+          {definition || error}
+        </p>
       </main>
 
-      <footer>
+      <footer className="mt-8 text-gray-500">
         <p>Powered by Next.js</p>
       </footer>
-
-      <style jsx>{`
-        .container {
-          padding: 0 2rem;
-        }
-        main {
-          min-height: 100vh;
-          padding: 4rem 0;
-          text-align: center;
-        }
-        h1 {
-          margin: 0;
-          font-size: 4rem;
-        }
-        input {
-          font-size: 1.5rem;
-          padding: 0.5rem;
-          margin-right: 1rem;
-        }
-        button {
-          font-size: 1.5rem;
-          padding: 0.5rem 1rem;
-        }
-        p {
-          font-size: 1.2rem;
-          margin-top: 2rem;
-        }
-        footer {
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-          padding: 1rem;
-          background: #f1f1f1;
-        }
-      `}</style>
     </div>
   );
 }
@@ -86,7 +59,6 @@ export async function getStaticProps() {
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     const dictionaryData = await res.json();
 
-    // Validate JSON data structure if needed
     if (!Array.isArray(dictionaryData)) {
       throw new Error('Invalid JSON structure');
     }
@@ -107,3 +79,4 @@ export async function getStaticProps() {
     };
   }
 }
+
