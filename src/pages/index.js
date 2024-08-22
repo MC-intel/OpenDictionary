@@ -86,7 +86,6 @@ export async function getStaticProps() {
     if (!res.ok) throw new Error('Network response was not ok');
     const dictionaryData = await res.json();
 
-    // Validate JSON data structure if needed
     if (!Array.isArray(dictionaryData)) {
       throw new Error('Invalid JSON structure');
     }
@@ -107,3 +106,4 @@ export async function getStaticProps() {
     };
   }
 }
+
