@@ -81,7 +81,8 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('http://localhost:3000/data/water.json'); // Use relative path for local testing
+    // Fetch local JSON data from the public directory
+    const res = await fetch('/data/water.json'); // Use relative path for Next.js
     if (!res.ok) throw new Error('Network response was not ok');
     const dictionaryData = await res.json();
 
@@ -106,4 +107,5 @@ export async function getStaticProps() {
     };
   }
 }
+
 
