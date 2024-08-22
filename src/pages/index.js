@@ -81,7 +81,7 @@ export default function Home({ dictionaryData, error }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('https://raw.githubusercontent.com/username/repo/main/data/dictionary.json');
+    const res = await fetch('https://raw.githubusercontent.com/MC-intel/dict_json_storage/main/water.json');
     if (!res.ok) throw new Error('Network response was not ok');
     const dictionaryData = await res.json();
 
