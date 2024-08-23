@@ -13,7 +13,7 @@ const handleSearch = async () => {
   }
   
   try {
-    const res = await fetch(`https://script.google.com/macros/s/AKfycbyndx9Qymia15t-VI30tAemV-AVrT8xLwumA4XwqZB5W9FBURbssNqLxofhhMLBa_an/exec?filename=${searchTerm}`);
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbyzBd3DMhRdgYy2ZmSUhDnpVZFN0wcLcFQ--8x1WFb9Y7NIf_QrBy5IS42InA2fKK4/exec?filename=${searchTerm}.json`);
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     
     const text = await res.text(); // Fetch raw text first
@@ -30,7 +30,6 @@ const handleSearch = async () => {
       throw new Error(dictionaryData.error);
     }
 
-    // Find the definition of the searched word
     const result = dictionaryData.find(
       entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
     );
