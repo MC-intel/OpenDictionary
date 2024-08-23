@@ -6,19 +6,30 @@ export default function Home() {
   const [definition, setDefinition] = useState(null);
   const [error, setError] = useState(null);
 
- const handleSearch = async () => {
+const handleSearch = async () => {
   if (!searchTerm) {
     setDefinition('Please enter a word.');
     return;
   }
   
   try {
-    const res = await fetch(`https://script.google.com/macros/s/AKfycbzHALCXzNRXicx9zrFGa24NH013Kd9o5jWFRik9QmqIlVUsTQ3ihLFxNQ3tuAri6q5Z/exec?filename=${searchTerm}.json`);
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbyndx9Qymia15t-VI30tAemV-AVrT8xLwumA4XwqZB5W9FBURbssNqLxofhhMLBa_an/exec?filename=${searchTerm}.json`);
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    
     const text = await res.text(); // Fetch raw text first
     console.log('Raw response:', text); // Log raw response for debugging
-    const dictionaryData = JSON.parse(text); // Parse JSON manually
     
+    let dictionaryData;
+    try {
+      dictionaryData = JSON.parse(text); // Parse JSON manually
+    } catch (error) {
+      throw new Error('Invalid JSON format');
+    }
+    
+    if (dictionaryData.error) {
+      throw new Error(dictionaryData.error);
+    }
+
     // Find the definition of the searched word
     const result = dictionaryData.find(
       entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
@@ -29,6 +40,7 @@ export default function Home() {
     setDefinition('Failed to fetch dictionary data');
   }
 };
+
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
