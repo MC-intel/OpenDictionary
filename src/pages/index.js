@@ -8,16 +8,12 @@ export default function Home() {
 
   const handleSearch = async () => {
     if (!searchTerm) {
-      setDefinition(null);
-      setError('Please enter a word.');
+      setDefinition('Please enter a word.');
       return;
     }
     
-    setDefinition(null);
-    setError(null);
-
     try {
-      const res = await fetch(`https://script.google.com/macros/s/AKfycbyK48BwT7_up8mPOZ38S2B6Uk1e8EDsBRYy8xZ4J8upFLUVjXzuSs_cded4f5-O1Jkk/exec?filename=${searchTerm}.json`);
+      const res = await fetch(`https://script.google.com/macros/s/AKfycbyK48BwT7_up8mPOZ38S2B6Uk1e8EDsBRYy8xZ4J8upFLUVjXzuSs_cded4f5-O1Jkk/exec?filename=water.json`);
       
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       
@@ -41,8 +37,7 @@ export default function Home() {
       setDefinition(result ? result.definition : 'Word not found');
     } catch (error) {
       console.error('Failed to fetch JSON data:', error.message);
-      setDefinition(null);
-      setError('Failed to fetch dictionary data');
+      setDefinition('Failed to fetch dictionary data');
     }
   };
 
