@@ -1,19 +1,30 @@
 import { useState } from 'react';
 import Head from 'next/head';
 
-export default function Home({ dictionaryData, error }) {
+export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [definition, setDefinition] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSearch = () => {
-    if (!dictionaryData) {
-      setDefinition('Data not available');
+  const handleSearch = async () => {
+    if (!searchTerm) {
+      setDefinition('Please enter a word.');
       return;
     }
-    const result = dictionaryData.find(
-      entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
-    );
-    setDefinition(result ? result.definition : 'Word not found');
+    
+    try {
+      const res = await fetch(`/api/fetchDictionary?filename=${searchTerm}.json`); // Adjust endpoint if needed
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+      const dictionaryData = await res.json();
+      
+      const result = dictionaryData.find(
+        entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
+      );
+      setDefinition(result ? result.definition : 'Word not found');
+    } catch (error) {
+      console.error('Failed to fetch JSON data:', error.message);
+      setDefinition('Failed to fetch dictionary data');
+    }
   };
 
   return (
@@ -47,36 +58,7 @@ export default function Home({ dictionaryData, error }) {
       </main>
 
       <footer className="mt-8 text-gray-500">
-        <p>Powered by Next.js</p>
       </footer>
     </div>
   );
 }
-
-export async function getStaticProps() {
-  try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbwaWNNJ6qbQR_Tva5kvh3qvFpol0CK-o4GxBIcnCeD5qbcsq40e80Becr5rd4R_k_T5/exec');
-    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-    const dictionaryData = await res.json();
-
-    if (!Array.isArray(dictionaryData)) {
-      throw new Error('Invalid JSON structure');
-    }
-
-    return {
-      props: {
-        dictionaryData,
-        error: null,
-      },
-    };
-  } catch (error) {
-    console.error('Failed to fetch JSON data:', error.message);
-    return {
-      props: {
-        dictionaryData: [],
-        error: 'Failed to fetch dictionary data',
-      },
-    };
-  }
-}
-
