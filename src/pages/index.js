@@ -13,8 +13,8 @@ export default function Home() {
     }
     
     try {
-      // Ensure the filename parameter matches the JSON file's name
-      const res = await fetch(`/api/fetchDictionary?filename=${searchTerm}.json`);
+      // Directly fetch from Google Apps Script webhook
+      const res = await fetch(`https://script.google.com/macros/s/AKfycbyPDAppXE3T43VySR9XZQuQL6nYIzpdvftnzpC_aKPDtynHw9XDZKYV2l_D25w0eV6F/exec?filename=${searchTerm}.json`);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       const dictionaryData = await res.json();
       
