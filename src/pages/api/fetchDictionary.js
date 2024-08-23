@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
   
   try {
-    const response = await fetch(`https://script.google.com/macros/s/AKfycbxAyKSSs3upvRqmYLiNsKwRzdbXqexAf5iXSX-gzok44reBadZGDm6YdLkF1WIvzuZL/exec?filename=${filename}`);
+    const response = await fetch(`https://script.google.com/macros/s/AKfycbxL9bi4yEXO-fdEZi-2Y-BZBvSDzTE-HnhwpOMxu7HHULyqJBDkwXRbrWNlsM-H6S1C/exec?filename=${filename}`);
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
     const data = await response.json();
     
