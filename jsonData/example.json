@@ -3,5 +3,6 @@
   { "word": "fire", "definition": "A process of combustion characterized by heat, light, and flame, often resulting in the burning of materials." },
   { "word": "earth", "definition": "The third planet from the Sun in the solar system, home to all known life forms, and characterized by its diverse environments including land, oceans, and atmosphere." },
   { "word": "air", "definition": "The invisible gaseous substance surrounding the Earth, a mixture mainly of oxygen and nitrogen, essential for breathing and the survival of most living organisms." },
-  { "word": "light", "definition": "The natural agent that stimulates sight and makes things visible, commonly produced by the sun, lamps, or other sources." }
+  { "word": "light", "definition": "The natural agent that stimulates sight and makes things visible, commonly produced by the sun, lamps, or other sources." },
+  { "word": "shadow", "definition": "A dark area or shape produced by a body coming between rays of light and a surface." }
 ]
