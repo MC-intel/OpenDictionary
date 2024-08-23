@@ -6,42 +6,45 @@ export default function Home() {
   const [definition, setDefinition] = useState(null);
   const [error, setError] = useState(null);
 
-const handleSearch = async () => {
-  if (!searchTerm) {
-    setDefinition('Please enter a word.');
-    return;
-  }
-  
-  try {
-    const res = await fetch(`https://script.google.com/macros/s/AKfycbyK48BwT7_up8mPOZ38S2B6Uk1e8EDsBRYy8xZ4J8upFLUVjXzuSs_cded4f5-O1Jkk/exec?filename=${searchTerm}.json`);
+  const handleSearch = async () => {
+    if (!searchTerm) {
+      setDefinition(null);
+      setError('Please enter a word.');
+      return;
+    }
     
-    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-    
-    const text = await res.text(); // Fetch raw text
-    console.log('Raw response:', text); // Debug log
-    
-    let dictionaryData;
+    setDefinition(null);
+    setError(null);
+
     try {
-      dictionaryData = JSON.parse(text); // Parse JSON
+      const res = await fetch(`https://script.google.com/macros/s/AKfycbyK48BwT7_up8mPOZ38S2B6Uk1e8EDsBRYy8xZ4J8upFLUVjXzuSs_cded4f5-O1Jkk/exec?filename=${searchTerm}.json`);
+      
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+      
+      const text = await res.text(); // Fetch raw text
+      console.log('Raw response:', text); // Debug log
+      
+      let dictionaryData;
+      try {
+        dictionaryData = JSON.parse(text); // Parse JSON
+      } catch (error) {
+        throw new Error('Invalid JSON format');
+      }
+      
+      if (dictionaryData.error) {
+        throw new Error(dictionaryData.error);
+      }
+
+      const result = dictionaryData.find(
+        entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
+      );
+      setDefinition(result ? result.definition : 'Word not found');
     } catch (error) {
-      throw new Error('Invalid JSON format');
+      console.error('Failed to fetch JSON data:', error.message);
+      setDefinition(null);
+      setError('Failed to fetch dictionary data');
     }
-    
-    if (dictionaryData.error) {
-      throw new Error(dictionaryData.error);
-    }
-
-    const result = dictionaryData.find(
-      entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
-    );
-    setDefinition(result ? result.definition : 'Word not found');
-  } catch (error) {
-    console.error('Failed to fetch JSON data:', error.message);
-    setDefinition('Failed to fetch dictionary data');
-  }
-};
-
-
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
