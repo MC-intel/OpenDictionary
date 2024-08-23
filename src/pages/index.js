@@ -14,14 +14,15 @@ const handleSearch = async () => {
   
   try {
     const res = await fetch(`https://script.google.com/macros/s/AKfycbzi3qIRJvlm3y4Sk105dEaQHoDPKhh9MXGpqb5ZWrLeO-fWXBLASWkkcZNCEeItwCgL/exec?filename=${searchTerm}.json`);
+    
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     
-    const text = await res.text(); // Fetch raw text first
-    console.log('Raw response:', text); // Log raw response for debugging
+    const text = await res.text(); // Fetch raw text
+    console.log('Raw response:', text); // Debug log
     
     let dictionaryData;
     try {
-      dictionaryData = JSON.parse(text); // Parse JSON manually
+      dictionaryData = JSON.parse(text); // Parse JSON
     } catch (error) {
       throw new Error('Invalid JSON format');
     }
@@ -39,6 +40,7 @@ const handleSearch = async () => {
     setDefinition('Failed to fetch dictionary data');
   }
 };
+
 
 
   return (
