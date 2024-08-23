@@ -6,28 +6,29 @@ export default function Home() {
   const [definition, setDefinition] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleSearch = async () => {
-    if (!searchTerm) {
-      setDefinition('Please enter a word.');
-      return;
-    }
+ const handleSearch = async () => {
+  if (!searchTerm) {
+    setDefinition('Please enter a word.');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbzHALCXzNRXicx9zrFGa24NH013Kd9o5jWFRik9QmqIlVUsTQ3ihLFxNQ3tuAri6q5Z/exec?filename=${searchTerm}.json`);
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    const text = await res.text(); // Fetch raw text first
+    console.log('Raw response:', text); // Log raw response for debugging
+    const dictionaryData = JSON.parse(text); // Parse JSON manually
     
-    try {
-      // Directly fetch from Google Apps Script webhook
-      const res = await fetch(`https://script.google.com/macros/s/AKfycbyPDAppXE3T43VySR9XZQuQL6nYIzpdvftnzpC_aKPDtynHw9XDZKYV2l_D25w0eV6F/exec?filename=${searchTerm}.json`);
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      const dictionaryData = await res.json();
-      
-      // Find the definition of the searched word
-      const result = dictionaryData.find(
-        entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
-      );
-      setDefinition(result ? result.definition : 'Word not found');
-    } catch (error) {
-      console.error('Failed to fetch JSON data:', error.message);
-      setDefinition('Failed to fetch dictionary data');
-    }
-  };
+    // Find the definition of the searched word
+    const result = dictionaryData.find(
+      entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
+    );
+    setDefinition(result ? result.definition : 'Word not found');
+  } catch (error) {
+    console.error('Failed to fetch JSON data:', error.message);
+    setDefinition('Failed to fetch dictionary data');
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
