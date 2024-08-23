@@ -13,7 +13,7 @@ const handleSearch = async () => {
   }
   
   try {
-    const res = await fetch(`https://script.google.com/macros/s/AKfycbyzBd3DMhRdgYy2ZmSUhDnpVZFN0wcLcFQ--8x1WFb9Y7NIf_QrBy5IS42InA2fKK4/exec?filename=${searchTerm}.json`);
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbzi3qIRJvlm3y4Sk105dEaQHoDPKhh9MXGpqb5ZWrLeO-fWXBLASWkkcZNCEeItwCgL/exec?filename=${searchTerm}.json`);
     if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     
     const text = await res.text(); // Fetch raw text first
