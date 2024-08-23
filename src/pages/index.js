@@ -13,7 +13,7 @@ export default function Home() {
     }
     
     try {
-      const res = await fetch(`https://script.google.com/macros/s/AKfycbyK48BwT7_up8mPOZ38S2B6Uk1e8EDsBRYy8xZ4J8upFLUVjXzuSs_cded4f5-O1Jkk/exec?filename=water.json`);
+      const res = await fetch(`https://script.google.com/macros/s/AKfycbxzW6HImXQ6uA1ws2aU-DqfhwklZxYqeUUgb2F5ftNu0nUXK5BcgayPJyFOZkzzPA/exec?filename=water.json`);
       
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       
