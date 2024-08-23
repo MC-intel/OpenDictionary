@@ -13,10 +13,12 @@ export default function Home() {
     }
     
     try {
-      const res = await fetch(`/api/fetchDictionary?filename=${searchTerm}.json`); // Adjust endpoint if needed
+      // Ensure the filename parameter matches the JSON file's name
+      const res = await fetch(`/api/fetchDictionary?filename=${searchTerm}.json`);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       const dictionaryData = await res.json();
       
+      // Find the definition of the searched word
       const result = dictionaryData.find(
         entry => entry.word.toLowerCase() === searchTerm.toLowerCase()
       );
